@@ -8,8 +8,26 @@ const path = require('path');
  */
 const publicDirectoryPath = path.join(__dirname, '../public');
 app.use(express.static(publicDirectoryPath));
+/**
+ * Use hbs for dinamic views
+ */
+const viewsPath = path.join(__dirname, '../templates');
+app.set('view engine', 'hbs');
+app.set('views', viewsPath);
 
-const PORT = process.env.PORT || 3001;
+app.get('', (req, res) => {
+    res.render('index');
+});
+
+app.get('/help', (req, res) => {
+    res.render('help');
+});
+
+app.get('/about', (req, res) => {
+    res.render('about');
+});
+
+const PORT = process.env.PORT || 8081;
 
 app.listen(PORT, (req, res) => {
     console.log(`Server UP on ${PORT}`);
