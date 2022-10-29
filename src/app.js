@@ -35,9 +35,21 @@ app.get('/help', (req, res) => {
     });
 });
 
+app.get('/help/*', (req, res) => {
+    res.render('404', {
+        title: `Ups! We can't help you with this...`,
+    });
+});
+
 app.get('/about', (req, res) => {
     res.render('about', {
         title: 'About',
+    });
+});
+
+app.get('*', (req, res) => {
+    res.render('404', {
+        title: 'Ups! Wrong page...',
     });
 });
 /**
