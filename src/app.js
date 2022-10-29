@@ -1,32 +1,48 @@
 require('dotenv').config();
 const express = require('express');
-const app = express();
 const path = require('path');
-
+const hbs = require('hbs');
+/**
+ * Initialize express
+ */
+const app = express();
+/**
+ * Define paths
+ */
+const publicDirectoryPath = path.join(__dirname, '../public');
+const viewsPath = path.join(__dirname, '../templates/views');
+const partialsPath = path.join(__dirname, '../templates/partials');
 /**
  * Use static files
  */
-const publicDirectoryPath = path.join(__dirname, '../public');
 app.use(express.static(publicDirectoryPath));
 /**
  * Use hbs for dinamic views
  */
-const viewsPath = path.join(__dirname, '../templates');
 app.set('view engine', 'hbs');
 app.set('views', viewsPath);
+hbs.registerPartials(partialsPath);
 
 app.get('', (req, res) => {
-    res.render('index');
+    res.render('index', {
+        title: 'Home',
+    });
 });
 
 app.get('/help', (req, res) => {
-    res.render('help');
+    res.render('help', {
+        title: 'Help',
+    });
 });
 
 app.get('/about', (req, res) => {
-    res.render('about');
+    res.render('about', {
+        title: 'About',
+    });
 });
-
+/**
+ * Initialize our server
+ */
 const PORT = process.env.PORT || 8081;
 
 app.listen(PORT, (req, res) => {
